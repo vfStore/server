@@ -37,6 +37,8 @@ app.use(productsRouter);
 console.log(process.env.MONGODB_USERNAME);
 const CONNECTION_URL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.f9gasac.mongodb.net/?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 8080;
+mongoose.set("strictQuery", false);
+
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
