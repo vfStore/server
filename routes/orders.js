@@ -3,12 +3,23 @@ const router = express.Router();
 import Order from "../models/Order.js";
 
 router.get("/orders", async (req, res) => {
+  console.log();
+
   try {
     const orders = await Order.find(); // Query the database for all orders
     console.log(orders);
     res.status(200).json(orders); // Return the orders as a JSON response
   } catch (error) {
     res.status(500).json({ message: error.message }); // Return a status code of 500 (Internal Server Error) if there is an issue
+  }
+});
+
+router.get("/orders/all", async (req, res) => {
+  try {
+    const orders = await Order.find(); // Query the database for all orders
+    res.status(200).json(orders); // Return the orders as a JSON response
+  } catch (error) {
+    res.status(500).json(error); // Return a status code of 500 (Internal Server Error) if there is an issue
   }
 });
 
