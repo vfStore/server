@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
+import ordersRouter from "./routes/orders.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(
 );
 app.use(userRouter);
 app.use(productsRouter);
+app.use(ordersRouter);
 
 console.log(process.env.MONGODB_USERNAME);
 const CONNECTION_URL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.f9gasac.mongodb.net/?retryWrites=true&w=majority`;
