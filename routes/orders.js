@@ -39,6 +39,36 @@ router.post("/order", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+router.patch("/orders/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+
+  const allowedUpdate = ["delivered"];
+  const isValidOperation = updates.every((update) => {
+    return allowedUpdate.includes(update);
+  });
+
+  if (!isValidOperation) {
+    return res.status(400).send({ error: "invalid updates" });
+  }
+
+  try {
+    const order = await Order.findById(req.params.id);
+
+    updates.forEach((update) => (order[update] = req.body[update]));
+    await order.save();
+    // const practice = await practice.findByIdAndUpdate(req.params.id, req.body, {
+    //   new: true,
+    //   runValidators: true,
+    // });
+
+    if (!order) {
+      res.status(404).send();
+    }
+    res.send(order);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 router.delete("/order/:id", async (req, res) => {
   try {
